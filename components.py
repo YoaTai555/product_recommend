@@ -63,8 +63,6 @@ def display_product(result):
 
     st.markdown("以下の商品をご提案いたします。")
 
-    logger.debug(f"Product Info: {product}") 
-
     # 「商品名」と「価格」
     st.success(f"""
             商品名：{product['name']}（商品ID: {product['id']}）\n
@@ -72,10 +70,14 @@ def display_product(result):
     """)
 
     # 在庫状況の表示
+    logger.debug(f"product name: {product['name']}")
+    logger.debug(f"Stock Status: {product['stock_status']}")
     if product['stock_status'] == "残りわずか":
         st.warning(ct.STOCK_WARNING_MESSAGE, icon=ct.STOCK_WARNING_ICON)
-    else:
+    elif product['stock_status'] == "なし":
         st.error(ct.STOCK_OUT_MESSAGE, icon=ct.STOCK_OUT_ICON)
+    else:
+        pass
 
     # 「商品カテゴリ」と「メーカー」と「ユーザー評価」
     st.code(f"""
